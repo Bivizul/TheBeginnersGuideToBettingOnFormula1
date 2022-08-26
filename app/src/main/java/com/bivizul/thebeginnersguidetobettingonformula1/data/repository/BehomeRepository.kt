@@ -18,6 +18,7 @@ class BehomeRepository @Inject constructor(private val outService: OutService) {
     suspend fun getBehome(setBehome: SetBehome) {
         _behome.emit(Resserv.LoadingR())
         val response = outService.getBehome(setBehome)
+        Log.e("qwer","BehomeRepository response : $response")
         if (response.isSuccessful) {
             response.body()?.let {
                 Log.e("qwer","BehomeRepository getBehome : $it")
