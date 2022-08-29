@@ -1,7 +1,7 @@
 package com.bivizul.thebeginnersguidetobettingonformula1.data.model
 
 import androidx.annotation.Keep
-import java.util.Locale
+import java.util.*
 
 @Keep
 data class SetBehome(

@@ -14,7 +14,7 @@ class BehomeViewModel @Inject constructor(private val behomeRepository: BehomeRe
 
     val behome = behomeRepository.behome
 
-    fun setBehome(setBehome: SetBehome){
+    fun setBehome(setBehome: SetBehome) {
         viewModelScope.launch {
             behomeRepository.getBehome(setBehome)
         }

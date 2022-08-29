@@ -28,14 +28,14 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled  = true
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
         debug {
-            isMinifyEnabled  = true
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -91,13 +91,13 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.material:material:1.6.1")
+    implementation("androidx.browser:browser:1.4.0")
 
     // Appyx
     // Core
-    implementation ("com.bumble.appyx:core:1.0-alpha05")
+    implementation("com.bumble.appyx:core:1.0-alpha05")
     // Additional routing sources (such as Tiles, Promoter carousel and Modal)
-    implementation ("com.bumble.appyx:navmodel-addons:1.0-alpha05")
-
+    implementation("com.bumble.appyx:navmodel-addons:1.0-alpha05")
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:$navVersion")
@@ -114,7 +114,7 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     implementation("androidx.hilt:hilt-work:1.0.0")
-    kapt ("com.google.dagger:hilt-compiler:$hiltVersion")
+    kapt("com.google.dagger:hilt-compiler:$hiltVersion")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     // Landscapist
@@ -128,10 +128,10 @@ dependencies {
     implementation("com.android.installreferrer:installreferrer:2.2")
 
     // Test
-    testImplementation ("junit:junit:4.13.2")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
-    debugImplementation ("androidx.compose.ui:ui-tooling:$composeUiVersion")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
+    debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 }

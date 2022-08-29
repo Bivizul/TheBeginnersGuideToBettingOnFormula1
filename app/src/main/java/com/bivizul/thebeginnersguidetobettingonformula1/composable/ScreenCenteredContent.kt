@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 @Composable
 internal fun ScreenCenteredContent(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Box(
         modifier = modifier

@@ -3,4 +3,16 @@
     <string name="title_error">Oops, complete error.</string>
     <string name="error_message">Please reload.</string>
     <string name="quit">Quit</string>
+    <string name="guide_button"> G U I D E </string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="previous">Previous</string>
+    <string name="g8">G8</string>
+    <string name="g7">G7</string>
+    <string name="g6">G6</string>
+    <string name="g5">G5</string>
+    <string name="g4">G4</string>
+    <string name="g3">G3</string>
+    <string name="g2">G2</string>
+    <string name="g1">G1</string>
 </resources>

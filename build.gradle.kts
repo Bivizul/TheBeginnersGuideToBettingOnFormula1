@@ -3,7 +3,7 @@ buildscript {
         set("compose_compile_version", "1.3.0")
         set("compose_ui_version", "1.2.1")
         set("accompanist_version", "0.25.1")
-        set("agp_version", "7.3.0-rc01")
+        set("agp_version", "7.2.2")
         set("kotlin_version", "1.7.10")
         set("lifecycle_version", "2.5.1")
         set("nav_version", "2.5.1")
@@ -23,8 +23,8 @@ buildscript {
     }
 }
 plugins {
-    id("com.android.application") version "7.3.0-rc01" apply false
-    id("com.android.library") version "7.3.0-rc01" apply false
+    id("com.android.application") version "7.2.2" apply false
+    id("com.android.library") version "7.2.2" apply false
     id("org.jetbrains.kotlin.android") version "1.7.10" apply false
 }
 

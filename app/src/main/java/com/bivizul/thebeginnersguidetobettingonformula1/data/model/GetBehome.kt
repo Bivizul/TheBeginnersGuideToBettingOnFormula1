@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 @Keep
 data class GetBehome(
     @SerializedName("url")
-    val getBehome: String
+    val getBehome: String,
 )

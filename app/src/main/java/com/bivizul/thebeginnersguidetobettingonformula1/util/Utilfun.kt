@@ -25,16 +25,16 @@ fun getDialogExit(context: Context, activity: Activity) {
 }
 
 fun getCapid(pref: SharedPreferences): String {
-    var inId = pref.getString("behome", "noBehome") ?: "noBehome"
-    if (inId == "noBehome") {
-        val dNow = Date()
-        val ft = SimpleDateFormat("yyMMddhhmmssMs")
-        val datetime = ft.format(dNow)
+    var capid = pref.getString("behome", "noBehome") ?: "noBehome"
+    if (capid == "noBehome") {
+        val dateNow = Date()
+        val simpleDateFormat = SimpleDateFormat("yyMMddhhmmssMs")
+        val datetime = simpleDateFormat.format(dateNow)
         val randomNum = (10000 until 100000).random()
-        inId = datetime + randomNum
-        pref.edit().putString("behome", inId).apply()
+        capid = datetime + randomNum
+        pref.edit().putString("behome", capid).apply()
     }
-    return inId
+    return capid
 }
 
 fun checkConMan(context: Context): Boolean {

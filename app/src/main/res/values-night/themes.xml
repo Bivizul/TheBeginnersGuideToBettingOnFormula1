@@ -2,9 +2,10 @@
 <resources>
 
     <style name="Theme.TheBeginnersGuideToBettingOnFormula1" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/primary_l</item>
+        <item name="android:statusBarColor">@color/primary_d</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
 
 </resources>

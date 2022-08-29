@@ -1,30 +1,29 @@
 package com.bivizul.thebeginnersguidetobettingonformula1.node.spotlight
 
 
+import android.content.res.Configuration
 import android.os.Parcelable
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.coroutineScope
-import com.bivizul.thebeginnersguidetobettingonformula1.data.model.Guide
-import com.bivizul.thebeginnersguidetobettingonformula1.node.guide.GuideViewModel
+import com.bivizul.thebeginnersguidetobettingonformula1.R
 import com.bivizul.thebeginnersguidetobettingonformula1.node.spotlight.SpotlightNode.Item.*
 import com.bivizul.thebeginnersguidetobettingonformula1.node.spotlight.SpotlightNode.Routing.*
 import com.bivizul.thebeginnersguidetobettingonformula1.node.spotlight.SpotlightNode.State.Loaded
 import com.bivizul.thebeginnersguidetobettingonformula1.node.spotlight.SpotlightNode.State.Loading
-import com.bivizul.thebeginnersguidetobettingonformula1.util.Resserv
+import com.bivizul.thebeginnersguidetobettingonformula1.util.ConstBehome
 import com.bumble.appyx.core.composable.Children
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
@@ -39,8 +38,7 @@ import com.bumble.appyx.navmodel.spotlight.operation.next
 import com.bumble.appyx.navmodel.spotlight.operation.previous
 import com.bumble.appyx.navmodel.spotlight.operation.updateElements
 import com.bumble.appyx.navmodel.spotlight.transitionhandler.rememberSpotlightSlider
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.skydoves.landscapist.coil.CoilImage
 import kotlinx.parcelize.Parcelize
 
 @ExperimentalUnitApi
@@ -53,8 +51,6 @@ class SpotlightNode(
         savedStateMap = buildContext.savedStateMap,
         backPressHandler = GoToPrevious(),
     ),
-//    private val guideViewModel: GuideViewModel,
-//    val guide: Guide,
 ) : ParentNode<SpotlightNode.Routing>(
     buildContext = buildContext,
     navModel = spotlight
@@ -68,15 +64,10 @@ class SpotlightNode(
     }
 
     init {
-        // simulate loading tabs
         if (spotlight.elementsCount() == 0) {
-
             screenState.value = Loading
-//            lifecycle.coroutineScope.launch {
-//                delay(2000)
             spotlight.updateElements(items = Item.getItemList())
             screenState.value = Loaded
-//            }
         } else {
             screenState.value = Loaded
         }
@@ -103,17 +94,21 @@ class SpotlightNode(
 
         @Parcelize
         object Child7 : Routing()
+
+        @Parcelize
+        object Child8 : Routing()
     }
 
     @Parcelize
     private enum class Item(val routing: Routing) : Parcelable {
-        C1(Child1),
-        C2(Child2),
-        C3(Child3),
-        C4(Child4),
-        C5(Child5),
-        C6(Child6),
-        C7(Child7);
+        G1(Child1),
+        G2(Child2),
+        G3(Child3),
+        G4(Child4),
+        G5(Child5),
+        G6(Child6),
+        G7(Child7),
+        G8(Child8);
 
         companion object {
             fun getItemList() = values().map { it.routing }
@@ -123,68 +118,46 @@ class SpotlightNode(
     override fun resolve(routing: Routing, buildContext: BuildContext): Node =
         when (routing) {
             Child1 -> ChildNode(
-//                guideViewModel = guideViewModel,
-//                guide=guide,
                 count = 0,
                 buildContext = buildContext
             )
             Child2 -> ChildNode(
-//                guideViewModel = guideViewModel,
-//                guide=guide,
                 count = 1,
                 buildContext = buildContext
             )
             Child3 -> ChildNode(
-//                guideViewModel = guideViewModel,
-//                guide=guide,
                 count = 2,
                 buildContext = buildContext
             )
             Child4 -> ChildNode(
-//                guideViewModel = guideViewModel,
-//                guide=guide,
                 count = 3,
                 buildContext = buildContext
             )
             Child5 -> ChildNode(
-//                guideViewModel = guideViewModel,
-//                guide=guide,
                 count = 4,
                 buildContext = buildContext
             )
             Child6 -> ChildNode(
-//                guideViewModel = guideViewModel,
-//                guide=guide,
                 count = 5,
                 buildContext = buildContext
             )
             Child7 -> ChildNode(
-//                guideViewModel = guideViewModel,
-//                guide=guide,
                 count = 6,
+                buildContext = buildContext
+            )
+            Child8 -> ChildNode(
+                count = 7,
                 buildContext = buildContext
             )
         }
 
     @Composable
     override fun View(modifier: Modifier) {
-
-//        val guide by guideViewModel.guide.collectAsState(initial = Resserv.LoadingR())
-//        Log.e("qwer", "SpotlightNode guide : $guide")
-
-        Log.e("qwer", "SpotlightNode")
-        val state by screenState
-
         Box(
             modifier = modifier
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-//            when (state) {
-//                is Loading -> CircularProgressIndicator()
-//                is Loaded -> LoadedState(modifier = modifier)
-//                else -> Unit
-//            }
             LoadedState(modifier = modifier)
         }
     }
@@ -193,97 +166,129 @@ class SpotlightNode(
     private fun LoadedState(modifier: Modifier) {
         val hasPrevious = spotlight.hasPrevious().collectAsState(initial = false)
         val hasNext = spotlight.hasNext().collectAsState(initial = false)
-        Column(
-            verticalArrangement = Arrangement.spacedBy(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        val orientation = LocalConfiguration.current.orientation
+        val image = when (orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> ConstBehome.BACK_P_101
+            else -> ConstBehome.BACK_L_101
+        }
+
+        Scaffold(
             modifier = modifier,
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                TextButton(
-                    text = "Previous",
-                    enabled = hasPrevious.value
+            bottomBar = {
+                BottomAppBar(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .height(110.dp),
+                    backgroundColor = MaterialTheme.colors.surface
                 ) {
-                    spotlight.previous()
-                }
-                TextButton(
-                    text = "Next",
-                    enabled = hasNext.value
-                ) {
-                    spotlight.next()
+                    Column(modifier = modifier.fillMaxSize()) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(2.dp)
+                                .horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            TextButton(
+                                text = stringResource(R.string.g1),
+                                enabled = true
+                            ) {
+                                spotlight.activate(G1)
+                            }
+                            TextButton(
+                                text = stringResource(R.string.g2),
+                                enabled = true
+                            ) {
+                                spotlight.activate(G2)
+                            }
+                            TextButton(
+                                text = stringResource(R.string.g3),
+                                enabled = true
+                            ) {
+                                spotlight.activate(G3)
+                            }
+                            TextButton(
+                                text = stringResource(R.string.g4),
+                                enabled = true
+                            ) {
+                                spotlight.activate(G4)
+                            }
+                            TextButton(
+                                text = stringResource(R.string.g5),
+                                enabled = true
+                            ) {
+                                spotlight.activate(G5)
+                            }
+                            TextButton(
+                                text = stringResource(R.string.g6),
+                                enabled = true
+                            ) {
+                                spotlight.activate(G6)
+                            }
+                            TextButton(
+                                text = stringResource(R.string.g7),
+                                enabled = true
+                            ) {
+                                spotlight.activate(G7)
+                            }
+                            TextButton(
+                                text = stringResource(R.string.g8),
+                                enabled = true
+                            ) {
+                                spotlight.activate(G8)
+                            }
+                        }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(2.dp),
+                            horizontalArrangement = Arrangement.SpaceAround
+                        ) {
+                            TextButton(
+                                text = stringResource(R.string.previous),
+                                enabled = hasPrevious.value
+                            ) {
+                                spotlight.previous()
+                            }
+                            TextButton(
+                                text = stringResource(R.string.back),
+                                enabled = true
+                            ) {
+                                navigateUp()
+                            }
+                            TextButton(
+                                text = stringResource(R.string.next),
+                                enabled = hasNext.value
+                            ) {
+                                spotlight.next()
+                            }
+                        }
+                    }
+
                 }
             }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                TextButton(
-                    text = "C1",
-                    enabled = true
-                ) {
-                    spotlight.activate(C1)
-                }
-                TextButton(
-                    text = "C2",
-                    enabled = true
-                ) {
-                    spotlight.activate(C2)
-                }
-                TextButton(
-                    text = "C3",
-                    enabled = true
-                ) {
-                    spotlight.activate(C3)
-                }
-                TextButton(
-                    text = "C4",
-                    enabled = true
-                ) {
-                    spotlight.activate(C4)
-                }
-                TextButton(
-                    text = "C5",
-                    enabled = true
-                ) {
-                    spotlight.activate(C5)
-                }
-                TextButton(
-                    text = "C6",
-                    enabled = true
-                ) {
-                    spotlight.activate(C6)
-                }
-                TextButton(
-                    text = "C7",
-                    enabled = true
-                ) {
-                    spotlight.activate(C7)
-                }
+        ) { paddingValues ->
+            CoilImage(imageModel = image, contentScale = ContentScale.Crop)
+            Box(modifier = modifier.padding(paddingValues)) {
+                Children(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState()),
+                    transitionHandler = rememberSpotlightSlider(clipToBounds = true),
+                    navModel = spotlight
+                )
             }
-
-            Children(
-                modifier = Modifier
-                    .padding(top = 12.dp, bottom = 12.dp)
-                    .fillMaxWidth(),
-                transitionHandler = rememberSpotlightSlider(clipToBounds = true),
-                navModel = spotlight
-            )
-
         }
     }
 
     @Composable
     private fun TextButton(text: String, enabled: Boolean = true, onClick: () -> Unit) {
-        Button(onClick = onClick, enabled = enabled, modifier = Modifier.padding(4.dp)) {
+        Button(
+            onClick = onClick,
+            modifier = Modifier.padding(4.dp),
+            enabled = enabled,
+        ) {
             Text(text = text)
         }
     }
