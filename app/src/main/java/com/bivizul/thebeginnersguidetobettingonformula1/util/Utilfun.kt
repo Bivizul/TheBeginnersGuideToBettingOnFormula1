@@ -5,11 +5,33 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
+import android.telephony.TelephonyManager
 import com.bivizul.thebeginnersguidetobettingonformula1.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun getSetBehome(context: Context): Locale = context.resources.configuration.locales[0]
+
+fun getSetBehome(context: Context) = context.resources.configuration.locales[0].language
+
+fun getTimeZone(): String {
+    val timeZone = TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT)
+    var zone = "00:00"
+    if (timeZone.length > 3) {
+        zone = timeZone.substring(3)
+    }
+    return zone
+}
+
+fun getSimLoc(context: Context): String {
+    val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    return telephonyManager.simCountryIso
+}
+
+fun getManModel(): String {
+    val manufactured = android.os.Build.MANUFACTURER
+    val model = android.os.Build.MODEL
+    return "$manufactured $model"
+}
 
 fun getDialogExit(context: Context, activity: Activity) {
     AlertDialog.Builder(context).apply {

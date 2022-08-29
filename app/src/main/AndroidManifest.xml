@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".TBGTBOF1App"
@@ -21,6 +22,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.TheBeginnersGuideToBettingOnFormula1">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

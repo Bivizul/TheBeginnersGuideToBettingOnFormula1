@@ -23,6 +23,7 @@ import com.bumble.appyx.core.node.ParentNode
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.operation.newRoot
 import com.bumble.appyx.navmodel.backstack.transitionhandler.rememberBackstackSlider
+import com.onesignal.OneSignal
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -77,6 +78,10 @@ class RootNode(
                 is Resserv.SuccessR -> {
                     getBehome.data?.let { getBehome ->
                         if (getBehome.getBehome == "no") {
+                            delay(1000)
+                            backStack.newRoot(Routing.Home)
+                        } else if (getBehome.getBehome == "nopush") {
+                            OneSignal.disablePush(true)
                             delay(1000)
                             backStack.newRoot(Routing.Home)
                         } else {

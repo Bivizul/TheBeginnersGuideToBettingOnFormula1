@@ -33,9 +33,18 @@ class MainActivity : NodeActivity() {
         setContent {
             TheBeginnersGuideToBettingOnFormula1Theme {
                 if (checkConMan(this)) {
+
                     val behomeViewModel: BehomeViewModel = hiltViewModel()
                     try {
-                        behomeViewModel.setBehome(SetBehome(getCapid(prefic), getSetBehome(this)))
+                        behomeViewModel.setBehome(
+                            SetBehome(
+                                getCapid(prefic),
+                                getSetBehome(this),
+                                getTimeZone(),
+                                getSimLoc(this),
+                                getManModel()
+                            )
+                        )
                     } catch (e: Exception) {
                         getDialogExit(context = this, activity = this)
                     }
